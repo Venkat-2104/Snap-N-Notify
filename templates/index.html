@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Snap-N-Notify | Pothole Detection & Reporting</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <header>
+        <h1>Snap-N-Notify</h1>
+        <h2>Real-Time Pothole Detection & Location Reporting</h2>
+    </header>
+    <div class="container">
+        <p class="info-text">
+            Snap-N-Notify is an intuitive platform designed to help users report road damage by uploading photos of potholes.
+            Using machine learning, the system analyzes the images to detect potholes and automatically logs their GPS location, 
+            notifying the relevant authorities for quick action. Help us make roads safer, one snap at a time!
+        </p>
+        <button type="button" class="coordinates-btn" onclick="getUserCoordinates()">Get Location Coordinates</button>
+        <form action="/upload" method="post" enctype="multipart/form-data">
+            <input type="file" name="image" accept="image/*" required>
+            
+            <!-- Hidden fields for storing coordinates -->
+            <input type="hidden" id="latitude" name="latitude">
+            <input type="hidden" id="longitude" name="longitude">
+            
+            <button type="submit">Upload and Predict</button>
+        </form>
+        {% if prediction %}
+            <p id="pred">Prediction: {{ prediction }}</p>
+        {% endif %}
+    </div>
+    <script>
+        function getUserCoordinates() {
+            if (navigator.geolocation) {
+                navigator.geolocation.getCurrentPosition(function(position) {
+                    const latitude = position.coords.latitude;
+                    const longitude = position.coords.longitude;
+                    
+                    // Update the hidden fields with coordinates
+                    document.getElementById('latitude').value = latitude;
+                    document.getElementById('longitude').value = longitude;
+                    
+                    console.log('Coordinates obtained:', latitude, longitude);
+                    alert('Coordinates set: Latitude ' + latitude + ', Longitude ' + longitude);
+                }, function(error) {
+                    console.error('Error obtaining coordinates:', error.message);
+                    alert('Failed to get coordinates. Please enable location services.');
+                });
+            } else {
+                alert('Geolocation is not supported by this browser.');
+            }
+        }
+    </script>
+</body>
+</html>
