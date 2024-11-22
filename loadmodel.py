@@ -27,29 +27,29 @@
 #         return "Normal road"
 # prompt: write a code test an image
 
-from tensorflow import keras
-import cv2
-import numpy as np
+from tensorflow.keras.models import load_model
+from cv2 import imread, resize, IMREAD_COLOR
+from numpy import array, expand_dims, argmax
 
 # Load the saved model
-model = keras.models.load_model('trained_model.h5')
+model = load_model('trained_model.h5')
 
 # Path to the image you want to test
 # image_path = 'path/to/your/test/image.jpg'
 
 # Preprocess the image
 def get_prediction_string(image_path):
-    img = cv2.imread(image_path, cv2.IMREAD_COLOR)
-    img = cv2.resize(img, (128, 128))
-    img = np.array(img)
+    img = imread(image_path, IMREAD_COLOR)
+    img = resize(img, (128, 128))
+    img = array(img)
     img = img / 255.0  # Normalize the image (if you normalized during training)
-    img = np.expand_dims(img, axis=0)  # Add a batch dimension
+    img = expand_dims(img, axis=0)  # Add a batch dimension
 
     # Make a prediction
     prediction = model.predict(img)
 
     # Get the predicted class (0 or 1, based on your model's output)
-    predicted_class = np.argmax(prediction)
+    predicted_class = argmax(prediction)
 
     # Interpret the prediction
     if predicted_class == 0:
