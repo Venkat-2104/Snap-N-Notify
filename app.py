@@ -1,6 +1,6 @@
 from flask import Flask, render_template, request, jsonify
 from loadmodel import get_prediction_string
-import tweepy
+from tweepy import Client, OAuth1UserHandler, API
 from dotenv import load_dotenv
 import os
 
@@ -17,15 +17,15 @@ ACCESS_TOKEN_SECRET = os.getenv("ACCESS_TOKEN_SECRET")
 #print(API_KEY, API_SECRET_KEY, ACCESS_TOKEN, ACCESS_TOKEN_SECRET,sep= '\n')
 
 # Authenticate using Client and API
-client = tweepy.Client(bearer_token=BEARER_TOKEN,
+client = Client(bearer_token=BEARER_TOKEN,
                        consumer_key=API_KEY,
                        consumer_secret=API_SECRET_KEY,
                        access_token=ACCESS_TOKEN,
                        access_token_secret=ACCESS_TOKEN_SECRET)
 
 # Authenticate with OAuth1 for media upload
-auth = tweepy.OAuth1UserHandler(API_KEY, API_SECRET_KEY, ACCESS_TOKEN, ACCESS_TOKEN_SECRET)
-api = tweepy.API(auth)
+auth = OAuth1UserHandler(API_KEY, API_SECRET_KEY, ACCESS_TOKEN, ACCESS_TOKEN_SECRET)
+api = API(auth)
 
 app = Flask(__name__)
 
