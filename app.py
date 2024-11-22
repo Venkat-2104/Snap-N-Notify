@@ -2,17 +2,17 @@ from flask import Flask, render_template, request, jsonify
 from loadmodel import get_prediction_string
 from tweepy import Client, OAuth1UserHandler, API
 from dotenv import load_dotenv
-import os
+from os import getenv
 
 # Load environment variables from .env file
 load_dotenv()
 
 # Access API credentials
-BEARER_TOKEN = os.getenv("BEARER_TOKEN")
-API_KEY = os.getenv("API_KEY")
-API_SECRET_KEY = os.getenv("API_SECRET_KEY")
-ACCESS_TOKEN = os.getenv("ACCESS_TOKEN")
-ACCESS_TOKEN_SECRET = os.getenv("ACCESS_TOKEN_SECRET")
+BEARER_TOKEN = getenv("BEARER_TOKEN")
+API_KEY = getenv("API_KEY")
+API_SECRET_KEY = getenv("API_SECRET_KEY")
+ACCESS_TOKEN = getenv("ACCESS_TOKEN")
+ACCESS_TOKEN_SECRET = getenv("ACCESS_TOKEN_SECRET")
 
 #print(API_KEY, API_SECRET_KEY, ACCESS_TOKEN, ACCESS_TOKEN_SECRET,sep= '\n')
 
@@ -73,4 +73,4 @@ def upload():
     return render_template('index.html', prediction=prediction_string)
 
 if __name__ == '__main__':
-    app.run(port=5000, debug=True)
+    app.run(debug=True)
