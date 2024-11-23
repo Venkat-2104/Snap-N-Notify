@@ -1,0 +1,12 @@
+{
+  "build": {
+    "builder": "python",
+    "output": "."
+  },
+  "run": {
+    "command": "python app.py",
+    "port": 5000
+  }
+}
+
+  
