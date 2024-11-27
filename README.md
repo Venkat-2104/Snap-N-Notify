@@ -1,2 +1,2 @@
 ## Screenshorts
-![Dashboard Screenshot](images/dashboard.jpg)
+![Dashboard Screenshot](Images/Screenshot 2024-11-27 090110.png)
